@@ -2,6 +2,7 @@ import express from 'express';
 import session from 'express-session';
 import nunjucks from 'nunjucks';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import jwt from 'jsonwebtoken';
 import ProductosRouter from "./routes/productos.ts";
 import UsuariosRouter from "./routes/usuarios.ts";
@@ -33,6 +34,9 @@ nunjucks.configure('src/views', {
   autoescape: true,
   express: app
 })
+
+// CORS middleware for SPA frontend (Vite dev server)
+app.use(cors())
 
 // Middleware for static files
 app.use('/public/imagenes', express.static('imagenes'))
