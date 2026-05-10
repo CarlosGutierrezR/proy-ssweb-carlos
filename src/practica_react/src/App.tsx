@@ -1,25 +1,40 @@
 import './App.css'
-import { Perritos } from './components/Perritos'
-import { Cuadros } from './components/Cuadros'
+import { Routes, Route, NavLink } from 'react-router-dom'
+import Portada from './pages/Portada'
+import Tarea9 from './pages/Tarea9'
+import Carrusel from './pages/Carrusel'
 
 function App() {
+  const linkClass = ({ isActive }: { isActive: boolean }) =>
+    isActive ? 'tab tab-active' : 'tab'
 
   return (
-    <>
-      <section id="center" className="flex flex-col items-center p-8">
-        <h1 className="text-3xl font-bold underline mb-4">Práctica de React</h1>
-        <div className="flex flex-col md:flex-row gap-12 items-start justify-center w-full">
-          <div className="flex flex-col items-center">
-            <h2 className="text-xl font-semibold">Perritos</h2>
-            <Perritos />
-          </div>
-          <div className="flex flex-col items-center">
-            <h2 className="text-xl font-semibold">Cuadros (Tienda)</h2>
-            <Cuadros />
-          </div>
+    <div className="min-h-screen flex flex-col">
+      <header className="navbar bg-base-200 shadow-sm">
+        <div className="flex-1 px-4 text-xl font-bold">
+          Tienda Prado · React
         </div>
-      </section>
-    </>
+        <nav role="tablist" className="tabs tabs-bordered">
+          <NavLink to="/" end className={linkClass}>
+            Portada
+          </NavLink>
+          <NavLink to="/tarea9" className={linkClass}>
+            Tarea 9
+          </NavLink>
+          <NavLink to="/carrusel" className={linkClass}>
+            Carrusel
+          </NavLink>
+        </nav>
+      </header>
+
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Portada />} />
+          <Route path="/tarea9" element={<Tarea9 />} />
+          <Route path="/carrusel" element={<Carrusel />} />
+        </Routes>
+      </main>
+    </div>
   )
 }
 
