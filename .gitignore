@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Archivos del sistema
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Prisma generado
+src/generated/prisma/
+
+# Build / temporales
+dist/
+build/
+.cache/
+
+# Archivos temporales locales
+tmp-*.mjs
+cookies.txt
