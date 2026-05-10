@@ -1,4 +1,11 @@
 import winston from 'winston';
+import fs from 'fs';
+
+// Ensure logs/ directory exists before configuring Winston file transports
+const logsDir = 'logs';
+if (!fs.existsSync(logsDir)) {
+  fs.mkdirSync(logsDir, { recursive: true });
+}
 
 const { combine, timestamp, printf, colorize, align, json } = winston.format;
 

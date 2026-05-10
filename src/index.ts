@@ -40,6 +40,9 @@ app.use('/public/imagenes', express.static('imagenes'))
 // Middleware for form parameters
 app.use(express.urlencoded({ extended: true }));
 
+// Middleware for JSON bodies (API REST)
+app.use(express.json());
+
 // Middleware for sessions
 app.use(session({
   secret: process.env.SESSION_SECRET || 'my-secret',
