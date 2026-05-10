@@ -96,4 +96,46 @@ router.post('/al-carrito/:id', async (req, res) => {
     res.redirect(`/producto/${id}`)
 })
 
+// Eliminar producto del carrito (llamado desde el offcanvas vía fetch)
+router.post('/carrito/eliminar/:id', async (req, res) => {
+    const id = Number(req.params.id)
+
+    if (!req.session.carrito) {
+        return res.json({
+            ok: true,
+            total_carrito: 0,
+            carrito_total_precio: 0,
+            carrito_vacio: true
+        })
+    }
+
+    req.session.carrito = req.session.carrito.filter(c => c.id !== id)
+
+    let total = 0
+    for (const it of req.session.carrito) total += it.cantidad
+    req.session.total_carrito = total
+
+    // Calcular precio total del carrito
+    let carrito_total_precio = 0
+    if (req.session.carrito.length > 0) {
+        const ids = req.session.carrito.map(item => item.id)
+        const productos = await prisma.producto.findMany({
+            where: { id: { in: ids } }
+        })
+        carrito_total_precio = req.session.carrito.reduce((acc, item) => {
+            const prod = productos.find(p => p.id === item.id)
+            return acc + Number(prod?.precio || 0) * item.cantidad
+        }, 0)
+    }
+
+    logger.debug(`Eliminado ${id} del carrito. Restan ${total} unidades`)
+
+    res.json({
+        ok: true,
+        total_carrito: total,
+        carrito_total_precio,
+        carrito_vacio: req.session.carrito.length === 0
+    })
+})
+
 export default router

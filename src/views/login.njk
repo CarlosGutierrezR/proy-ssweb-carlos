@@ -17,13 +17,15 @@
 
                 <div class="mb-4 text-start">
                     <label for="email" class="form-label text-muted small px-2">Correo electrónico</label>
-                    <input type="email" class="form-control rounded-0 form-control-lg border-0 border-bottom px-2" id="email" name="email" required style="font-size: 0.9rem;" placeholder="correo electrónico" />
+                    <input type="email" class="form-control rounded-0 form-control-lg border-0 border-bottom px-2" id="email" name="email" required autocomplete="email" autofocus style="font-size: 0.9rem;" placeholder="correo electrónico" />
                 </div>
-                
+
                 <div class="mb-5 text-start position-relative">
                     <label for="password" class="form-label text-muted small px-2">Contraseña</label>
-                    <input type="password" class="form-control rounded-0 form-control-lg border-0 border-bottom px-2" id="password" name="password" required style="font-size: 0.9rem;" placeholder="contraseña" />
-                    <i class="bi bi-eye-slash position-absolute" style="right: 15px; bottom: 10px; cursor: pointer; color: var(--prado-accent);"></i>
+                    <input type="password" class="form-control rounded-0 form-control-lg border-0 border-bottom px-2" id="password" name="password" required autocomplete="current-password" style="font-size: 0.9rem;" placeholder="contraseña" />
+                    <button type="button" id="toggle-password" class="btn btn-link position-absolute p-0 border-0 shadow-none" style="right: 10px; bottom: 4px; color: var(--prado-accent);" aria-label="Mostrar contraseña">
+                        <i class="bi bi-eye-slash"></i>
+                    </button>
                 </div>
 
                 <div class="text-center d-grid gap-2 col-8 mx-auto position-relative" style="top: 2rem; margin-bottom: 2rem;">
@@ -36,4 +38,22 @@
         </div>
     </div>
 </div>
+
+<script>
+(function () {
+  const btn = document.getElementById('toggle-password');
+  const input = document.getElementById('password');
+  if (!btn || !input) return;
+  btn.addEventListener('click', function () {
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+    const icon = btn.querySelector('i');
+    if (icon) {
+      icon.classList.toggle('bi-eye-slash', !isHidden);
+      icon.classList.toggle('bi-eye', isHidden);
+    }
+    btn.setAttribute('aria-label', isHidden ? 'Ocultar contraseña' : 'Mostrar contraseña');
+  });
+})();
+</script>
 {% endblock %}
