@@ -1,0 +1,9 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CarrouselSSG from '../components/CarrouselSSG';
+import productos from '../data/productos.json';
+const destacados = productos.slice(0, 12);
+---
+<Layout title="Galería SSG · Tarea 12">
+  <CarrouselSSG productos={destacados} client:load />
+</Layout>

@@ -1,0 +1,41 @@
+---
+import '../styles/app.css';
+interface Props {
+  title?: string;
+}
+const { title = 'Tienda Prado · Astro' } = Astro.props;
+const path = Astro.url.pathname;
+const tabClass = (href: string) => {
+  const active = href === '/' ? path === '/' : path.startsWith(href);
+  return active ? 'tab tab-active' : 'tab';
+};
+---
+<!doctype html>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
+    <header class="navbar bg-base-200 shadow-sm">
+      <div class="flex-1 px-4 text-xl font-bold">
+        Tienda Prado · Astro
+      </div>
+      <nav role="tablist" class="tabs tabs-bordered px-4">
+        <a role="tab" class={tabClass('/')} href="/">Portada</a>
+        <a role="tab" class={tabClass('/carrousel')} href="/carrousel">Carrousel</a>
+        <a role="tab" class={tabClass('/galeria')} href="/galeria">Galería SSG</a>
+        <a role="tab" class={tabClass('/ssg')} href="/ssg">SSG</a>
+      </nav>
+    </header>
+    <main class="flex-1">
+      <slot />
+    </main>
+    <footer class="footer footer-center bg-base-200 text-base-content p-4">
+      <aside>
+        <p>Proyecto SSBW · Tarea 11 · Astro Islands</p>
+      </aside>
+    </footer>
+  </body>
+</html>

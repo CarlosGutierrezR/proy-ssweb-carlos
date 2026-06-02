@@ -1,0 +1,46 @@
+<section class="max-w-4xl mx-auto p-8">
+  <div class="hero bg-base-200 rounded-box">
+    <div class="hero-content text-center py-12">
+      <div class="max-w-2xl">
+        <h1 class="text-4xl font-bold mb-4">Tarea 11 — Astro Framework</h1>
+        <p class="py-4 text-lg">
+          Sitio estático construido con Astro, Tailwind, DaisyUI y React.
+          La página de carrousel usa un componente React como
+          <span class="badge badge-neutral">Astro Island</span>
+          cargado con <code class="badge badge-outline">client:load</code>.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mt-6">
+          <a href="/carrousel" class="btn btn-primary">
+            Ver carrousel React
+          </a>
+          <a href="/galeria" class="btn btn-secondary">
+            Ver galería SSG
+          </a>
+          <a href="/ssg" class="btn btn-accent">
+            Ver destacados SSG
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+    <article class="card bg-base-100 border">
+      <div class="card-body">
+        <h2 class="card-title">Astro</h2>
+        <p>Genera HTML estático y carga JavaScript solo donde es necesario.</p>
+      </div>
+    </article>
+    <article class="card bg-base-100 border">
+      <div class="card-body">
+        <h2 class="card-title">React Island</h2>
+        <p>El carrousel interactivo se hidrata explícitamente con client:load.</p>
+      </div>
+    </article>
+    <article class="card bg-base-100 border">
+      <div class="card-body">
+        <h2 class="card-title">Tarea 12</h2>
+        <p>La página SSG genera destacados y páginas de producto estáticas.</p>
+      </div>
+    </article>
+  </section>
+</section>

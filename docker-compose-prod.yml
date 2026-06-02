@@ -1,0 +1,57 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ssbw_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ssbw_password_cambia_esto}
+      POSTGRES_DB: ${POSTGRES_DB:-ssbw}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - tienda_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ssbw_user} -d ${POSTGRES_DB:-ssbw}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  tienda-prado:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      LOG_LEVEL: info
+      PORT: 3000
+      POSTGRES_USER: ${POSTGRES_USER:-ssbw_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ssbw_password_cambia_esto}
+      POSTGRES_DB: ${POSTGRES_DB:-ssbw}
+      POSTGRES_HOST: db
+      DATABASE_URL: postgresql://${POSTGRES_USER:-ssbw_user}:${POSTGRES_PASSWORD:-ssbw_password_cambia_esto}@db:5432/${POSTGRES_DB:-ssbw}?schema=public
+      SESSION_SECRET: ${SESSION_SECRET:-cambia_este_valor_sesion_prod}
+      SECRET_KEY: ${SECRET_KEY:-cambia_este_valor_jwt_prod}
+    networks:
+      - tienda_net
+  caddy:
+    image: caddy:alpine
+    depends_on:
+      - tienda-prado
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - caddy_config:/config
+      - caddy_data:/data
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    networks:
+      - tienda_net
+volumes:
+  postgres_data:
+  caddy_config:
+  caddy_data:
+networks:
+  tienda_net:

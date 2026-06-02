@@ -1,0 +1,44 @@
+﻿---
+import Layout from '../layouts/Layout.astro';
+import CardProducto from '../components/CardProducto.astro';
+import productos from '../data/productos.json';
+type Producto = {
+  id?: number;
+  título: string;
+  descripción?: string;
+  precio: string | number;
+  imagen: string;
+};
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+const destacados = (productos as Producto[]).slice(0, 12);
+---
+<Layout title="Destacados SSG · Tarea 12">
+  <section class="max-w-6xl mx-auto p-8">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold tracking-wide">Destacados</h1>
+      <p class="mt-3 opacity-70">
+        Página generada estáticamente con Astro a partir de productos locales.
+      </p>
+      <a href="/galeria" class="btn btn-link mt-2">
+        Ver galería SSG con React
+      </a>
+    </div>
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {destacados.map((producto, index) => (
+        <CardProducto
+          titulo={producto.título}
+          precio={producto.precio}
+          imagen={producto.imagen}
+          slug={`${slugify(producto.título)}-${index + 1}`}
+        />
+      ))}
+    </section>
+  </section>
+</Layout>
+

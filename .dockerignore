@@ -1,0 +1,14 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+.env
+.env.*
+logs
+src/generated
+src/practica_react/node_modules
+src/practica_react/dist
+src/practica_astro/node_modules
+src/practica_astro/dist
+src/practica_astro/.astro
+.DS_Store

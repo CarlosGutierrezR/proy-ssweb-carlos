@@ -1,0 +1,23 @@
+---
+interface Props {
+  titulo: string;
+  precio: string | number;
+  imagen: string;
+  slug: string;
+}
+const { titulo, precio, imagen, slug } = Astro.props;
+---
+<a href={`/productos/${slug}`} class="card bg-base-100 border shadow-sm hover:shadow-md transition-shadow">
+  <figure class="bg-base-200 p-4 h-56">
+    <img
+      src={`/images/${imagen}`}
+      alt={titulo}
+      class="h-full w-full object-contain"
+      loading="lazy"
+    />
+  </figure>
+  <div class="card-body p-4">
+    <h2 class="card-title text-base leading-snug">{titulo}</h2>
+    <p class="font-bold">{precio} €</p>
+  </div>
+</a>
